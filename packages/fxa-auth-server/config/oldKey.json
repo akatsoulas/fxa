@@ -1,0 +1,7 @@
+{
+  "kty": "RSA",
+  "n": "qCALlQNIhIwlPRRpKrCdnvbSCzBF1CabJ9o_uWNTP-gwffaRpAbATeZYPYjNHNKif84S6H7udAJhRVvImurpEcBTF4YH88UHVC9oHYXI3_q1EFcROoSTXSjazGlPkDiYoljP5PTzp79tJlxP2PbWdKu6YKO31WaO2Oa2s2_LIu97mlovUeMzimQUkVoPr1CP9gUz4N9zYcpuZ5S10Ot9syOhF_m41WKZg9-7AktXsdekzBeRJ9JVdYN1CpwyZst-jvkoR8pEq0UWxc295BR9ZruqZWgJNR5ZGRc1xhwEiyn_Xni0gdodhEDn1aqQI3gWwtpx-i-Rru6L-8kt2ukUpQ",
+  "e": "AQAB",
+  "kid": "2019-04-29-f2ea65b5d98e364276a011639ea9a74b",
+  "fxa-createdAt": 1556575200
+}

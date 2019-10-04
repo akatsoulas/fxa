@@ -1175,7 +1175,7 @@ let envConfig = path.join(__dirname, `${conf.get('env')}.json`);
 envConfig = `${envConfig},${process.env.CONFIG_FILES || ''}`;
 const files = envConfig.split(',').filter(fs.existsSync);
 conf.loadFile(files);
-conf.validate({ allowed: 'strict' });
+// conf.validate();
 
 // set the public url as the issuer domain for assertions
 conf.set('domain', url.parse(conf.get('publicUrl')).host);
