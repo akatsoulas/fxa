@@ -5,14 +5,14 @@
 const buf = require('buf').hex;
 const unbuf = require('buf').unbuf.hex;
 
-const config = require('../config');
+const config = require('../../../config');
 const encrypt = require('../encrypt');
 const helpers = require('./helpers');
 const logger = require('../logging')('db.memory');
 const P = require('../../promise');
 const unique = require('../unique');
 
-const MAX_TTL = config.get('expiration.accessToken');
+const MAX_TTL = config.get('oauthServer.expiration.accessToken');
 
 /*
  * MemoryStore structure:

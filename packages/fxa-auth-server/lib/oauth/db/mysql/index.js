@@ -10,7 +10,7 @@ const moment = require('moment');
 const mysql = require('mysql');
 const MysqlPatcher = require('mysql-patcher');
 
-const config = require('../../config');
+const config = require('../../../../config');
 const encrypt = require('../../encrypt');
 const helpers = require('../helpers');
 const P = require('../../../promise');
@@ -18,7 +18,7 @@ const ScopeSet = require('../../../../../fxa-shared').oauth.scopes;
 const unique = require('../../unique');
 const patch = require('./patch');
 
-const MAX_TTL = config.get('expiration.accessToken');
+const MAX_TTL = config.get('oauthServer.expiration.accessToken');
 const REQUIRED_SQL_MODES = ['STRICT_ALL_TABLES', 'NO_ENGINE_SUBSTITUTION'];
 const REQUIRED_CHARSET = 'UTF8MB4_UNICODE_CI';
 

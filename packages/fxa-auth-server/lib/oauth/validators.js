@@ -6,19 +6,19 @@ const Joi = require('joi');
 const ScopeSet = require('../../../fxa-shared').oauth.scopes;
 const authServerValidators = require('../routes/validators');
 
-const config = require('./config');
+const config = require('../../config');
 
 exports.HEX_STRING = /^(?:[0-9a-f]{2})+$/;
 exports.B64URL_STRING = /^[A-Za-z0-9-_]+$/;
 exports.BASIC_AUTH_HEADER = /^Basic\s+([a-z0-9+\/]+)$/i;
 
 exports.clientId = Joi.string()
-  .length(config.get('unique.id') * 2) // hex = bytes*2
+  .length(config.get('oauthServer.unique.id') * 2) // hex = bytes*2
   .regex(exports.HEX_STRING)
   .required();
 
 exports.clientSecret = Joi.string()
-  .length(config.get('unique.clientSecret') * 2) // hex = bytes*2
+  .length(config.get('oauthServer.unique.clientSecret') * 2) // hex = bytes*2
   .regex(exports.HEX_STRING)
   .required();
 
@@ -28,7 +28,7 @@ exports.codeVerifier = Joi.string()
   .regex(exports.B64URL_STRING); // https://tools.ietf.org/html/rfc7636#section-4.1
 
 exports.token = Joi.string()
-  .length(config.get('unique.token') * 2)
+  .length(config.get('oauthServer.unique.token') * 2)
   .regex(exports.HEX_STRING);
 
 exports.sessionTokenId = authServerValidators.sessionTokenId;

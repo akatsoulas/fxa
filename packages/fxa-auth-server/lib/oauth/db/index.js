@@ -6,11 +6,11 @@ const unbuf = require('buf').unbuf.hex;
 
 const P = require('../../promise');
 
-const config = require('../config');
+const config = require('../../../config');
 const encrypt = require('../encrypt');
 const logger = require('../logging')('db');
 const klass =
-  config.get('db.driver') === 'mysql'
+  config.get('oauthServer.db.driver') === 'mysql'
     ? require('./mysql')
     : require('./memory');
 
@@ -48,7 +48,7 @@ function convertClientToConfigFormat(client) {
 }
 
 function preClients() {
-  var clients = config.get('clients');
+  var clients = config.get('oauthServer.clients');
   if (clients && clients.length) {
     logger.debug('predefined.loading', { clients: clients });
     return P.all(
@@ -97,7 +97,7 @@ function preClients() {
 
         // Modification of the database at startup in production and stage is
         // not preferred. This option will be set to false on those stacks.
-        if (!config.get('db.autoUpdateClients')) {
+        if (!config.get('oauthServer.db.autoUpdateClients')) {
           return P.resolve();
         }
 
@@ -130,7 +130,7 @@ function preClients() {
  * Insert pre-defined list of scopes into the DB
  */
 function scopes() {
-  var scopes = config.get('scopes');
+  var scopes = config.get('oauthServer.scopes');
   if (scopes && scopes.length) {
     logger.debug('scopes.loading', JSON.stringify(scopes));
 
@@ -155,14 +155,16 @@ function withDriver() {
     return P.resolve(driver);
   }
   var p;
-  if (config.get('db.driver') === 'mysql') {
-    p = klass.connect(config.get('mysql'));
+  if (config.get('oauthServer.db.driver') === 'mysql') {
+    p = klass.connect(config.get('oauthServer.mysql'));
   } else {
     p = klass.connect();
   }
   return p
     .then(function(store) {
-      logger.debug('connected', { driver: config.get('db.driver') });
+      logger.debug('connected', {
+        driver: config.get('oauthServer.db.driver'),
+      });
       driver = store;
     })
     .then(exports._initialClients)
