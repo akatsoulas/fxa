@@ -11,7 +11,6 @@ const mailbox = require('./mailbox');
 const createDBServer = require('../fxa-auth-db-mysql');
 const createAuthServer = require('../bin/key_server');
 const createMailHelper = require('./mail_helper');
-const createOauthHelper = require('./oauth_helper');
 const createProfileHelper = require('./profile_helper');
 
 let currentServer;
@@ -40,7 +39,6 @@ function TestServer(config, printLogs, options = {}) {
   this.config = config;
   this.server = null;
   this.mail = null;
-  this.oauth = options.oauthServer;
   this.mailbox = mailbox(
     config.smtp.api.host,
     config.smtp.api.port,
@@ -68,16 +66,12 @@ TestServer.prototype.start = function() {
     createMailHelper(this.printLogs),
   ];
 
-  if (this.config.oauth.url && !this.oauth) {
-    promises.push(createOauthHelper());
-  }
   if (this.config.profileServer.url && !this.profileServer) {
     promises.push(createProfileHelper());
   }
-  return P.all(promises).spread((auth, mail, oauth, profileServer) => {
+  return P.all(promises).spread((auth, mail, profileServer) => {
     this.server = auth;
     this.mail = mail;
-    this.oauth = oauth;
     this.profileServer = profileServer;
   });
 };
@@ -99,9 +93,6 @@ TestServer.prototype.stop = function() {
   } catch (e) {}
   if (this.server) {
     const doomed = [this.server.close(), this.mail.close()];
-    if (this.oauth) {
-      doomed.push(this.oauth.close());
-    }
     if (this.profileServer) {
       doomed.push(this.profileServer.close());
     }

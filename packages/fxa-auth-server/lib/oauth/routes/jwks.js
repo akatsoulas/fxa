@@ -2,10 +2,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// TODO unfuck this mess
-const mozlog = require('mozlog')({
-  level: 'critical',
-  app: 'oauth',
-});
+const { PUBLIC_KEYS } = require('../keys');
 
-module.exports = mozlog;
+module.exports = {
+  cache: {
+    privacy: 'public',
+    expiresIn: 10000,
+  },
+  handler: async function jwks() {
+    return { keys: PUBLIC_KEYS };
+  },
+};

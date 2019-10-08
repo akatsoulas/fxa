@@ -2,10 +2,4 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-// TODO unfuck this mess
-const mozlog = require('mozlog')({
-  level: 'critical',
-  app: 'oauth',
-});
-
-module.exports = mozlog;
+module.exports = require('../../oauth/auth_bearer');

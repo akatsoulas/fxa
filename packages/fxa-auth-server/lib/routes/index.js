@@ -48,6 +48,7 @@ module.exports = function(
   // The routing modules themselves.
   const defaults = require('./defaults')(log, db);
   const idp = require('./idp')(log, serverPublicKeys);
+  const oauthServer = require('../oauth/routes');
   const account = require('./account')(
     log,
     db,
@@ -189,7 +190,7 @@ module.exports = function(
   defaults.forEach(r => {
     r.path = basePath + r.path;
   });
-  const allRoutes = defaults.concat(idp, v1Routes);
+  const allRoutes = defaults.concat(idp, v1Routes, oauthServer.routes);
 
   allRoutes.forEach(r => {
     // Default auth.payload to 'optional' for all authenticated routes.

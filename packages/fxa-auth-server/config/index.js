@@ -677,7 +677,7 @@ const conf = convict({
     url: {
       format: 'url',
       doc: 'URL at which to verify OAuth tokens',
-      default: 'http://127.0.0.1:9010',
+      default: 'http://127.0.0.1:9000',
       env: 'OAUTH_URL',
     },
     keepAlive: {
@@ -773,7 +773,7 @@ const conf = convict({
     audience: {
       doc: 'audience for oauth JWTs',
       format: 'url',
-      default: 'http://127.0.0.1:9010',
+      default: 'http://127.0.0.1:9000',
       env: 'OAUTH_URL',
     },
     auth: {
@@ -1079,12 +1079,12 @@ const conf = convict({
     },
     publicUrl: {
       format: 'url',
-      default: 'http://127.0.0.1:9010',
+      default: 'http://127.0.0.1:9000',
       env: 'PUBLIC_URL',
     },
     server: {
       host: { env: 'HOST', default: '127.0.0.1' },
-      port: { env: 'PORT', format: 'port', default: 9010 },
+      port: { env: 'PORT', format: 'port', default: 9000 },
     },
     serverInternal: {
       host: { env: 'HOST_INTERNAL', default: '127.0.0.1' },
