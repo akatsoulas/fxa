@@ -16,7 +16,7 @@
 
 const { GROUPS, initialize } = require('../../../fxa-shared/metrics/amplitude');
 const logger = require('./logging/log')();
-const ua = require('./user-agent');
+const ua = require('../../../fxa-shared/metrics/user-agent');
 const config = require('./configuration');
 const { version: VERSION } = require('../../package.json');
 

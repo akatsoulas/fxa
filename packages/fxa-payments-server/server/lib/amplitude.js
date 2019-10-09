@@ -5,8 +5,9 @@
 'use strict';
 
 const { GROUPS, initialize } = require('../../../fxa-shared/metrics/amplitude');
+const joi = require('joi');
 const log = require('./logging/log')();
-const ua = require('./user-agent');
+const ua = require('../../../fxa-shared/metrics/user-agent');
 const { version: VERSION } = require('../../package.json');
 
 const FUZZY_EVENTS = new Map([
