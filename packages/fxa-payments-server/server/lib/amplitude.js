@@ -4,7 +4,15 @@
 
 'use strict';
 
-const { GROUPS, initialize } = require('../../../fxa-shared/metrics/amplitude');
+const {
+  GROUPS,
+  initialize,
+  mapBrowser,
+  mapOs,
+  mapUserAgentProperties,
+  mapFormFactor,
+  mapLocation,
+} = require('../../../fxa-shared/metrics/amplitude');
 const joi = require('joi');
 const log = require('./logging/log')();
 const ua = require('../../../fxa-shared/metrics/user-agent');
