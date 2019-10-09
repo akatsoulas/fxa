@@ -4,6 +4,7 @@
 
 'use strict';
 
+const joi = require('joi');
 const amplitude = require('../amplitude');
 
 module.exports = {
