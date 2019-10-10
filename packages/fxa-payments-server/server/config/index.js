@@ -23,6 +23,14 @@ const conf = convict({
     env: 'CLIENT_ADDRESS_DEPTH',
     format: Number,
   },
+  clientMetrics: {
+    maxEventOffset: {
+      default: '2 days',
+      doc: 'Maximum event offset',
+      env: 'CLIENT_METRICS_MAX_EVENT_OFFSET',
+      format: 'duration',
+    },
+  },
   csp: {
     enabled: {
       default: true,

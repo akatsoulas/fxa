@@ -7,28 +7,33 @@
 const joi = require('joi');
 const amplitude = require('../amplitude');
 
+// TODO: add more validators, and extract validators duplicated here and in
+//       fxa-content-server into fxa-shared
+const clientMetricsConfig = config.get('client_metrics');
+const MAX_EVENT_OFFSET = clientMetricsConfig.maxEventOffset;
+const EVENT_TYPE_PATTERN = /^[\w\s.:-]+$/; // the space is to allow for error contexts that contain spaces, e.g., `error.unknown context.auth.108`
+const BODY_SCHEMA = {
+  data: joi.object().required(),
+  events: joi
+    .array()
+    .items(
+      joi.object().keys({
+        offset: OFFSET_TYPE.max(MAX_EVENT_OFFSET).required(),
+        type: STRING_TYPE.regex(EVENT_TYPE_PATTERN).required(),
+      })
+    )
+    .required(),
+};
+
 module.exports = {
   method: 'post',
   path: '/metrics',
-
+  validate: {
+    body: BODY_SCHEMA,
+  },
   handler(request, response) {
-    if (!validate(request.body)) {
-      return response.status(400).end();
-    }
-
     const { data, events } = request.body;
     events.forEach(event => amplitude(event, request, data));
     response.status(200).end();
   },
 };
-
-function validate(body) {
-  // TODO: replace this with JSON schema or hapi or whatever
-  return (
-    body.data &&
-    typeof body.data === 'object' &&
-    !Array.isArray(body.data) &&
-    Array.isArray(body.events) &&
-    body.events.every(event => typeof event === 'string')
-  );
-}

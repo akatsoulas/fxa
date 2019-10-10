@@ -12,6 +12,7 @@ const {
   mapUserAgentProperties,
   mapFormFactor,
   mapLocation,
+  toSnakeCase,
 } = require('../../../fxa-shared/metrics/amplitude');
 const config = require('../config');
 const amplitude = config.get('amplitude');
@@ -26,7 +27,7 @@ const FUZZY_EVENTS = new Map([
     /^amplitude\.([\w-]+)\.([\w-]+)$/,
     {
       group: group => GROUPS[group],
-      event: (group, event) => event,
+      event: (group, event) => toSnakeCase(event),
     },
   ],
 ]);
@@ -50,6 +51,8 @@ module.exports = (event, request, data) => {
   });
 
   if (amplitudeEvent) {
+    // Amplitude events are logged to stdout, where they are picked up by the
+    // stackdriver logging agent.
     log.info('amplitudeEvent', amplitudeEvent);
   }
 };
