@@ -9,6 +9,14 @@ const path = require('path');
 const convict = require('convict');
 
 const conf = convict({
+  amplitude: {
+    disabled: {
+      default: false,
+      doc: 'Disable amplitude events',
+      env: 'AMPLITUDE_DISABLED',
+      format: Boolean,
+    },
+  },
   clientAddressDepth: {
     default: 3,
     doc: 'location of the client ip address in the remote address chain',

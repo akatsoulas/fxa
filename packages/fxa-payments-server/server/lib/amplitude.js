@@ -13,6 +13,8 @@ const {
   mapFormFactor,
   mapLocation,
 } = require('../../../fxa-shared/metrics/amplitude');
+const config = require('../config');
+const amplitude = config.get('amplitude');
 const joi = require('joi');
 const log = require('./logging/log')();
 const ua = require('../../../fxa-shared/metrics/user-agent');
@@ -32,7 +34,7 @@ const FUZZY_EVENTS = new Map([
 const transform = initialize({}, {}, FUZZY_EVENTS);
 
 module.exports = (event, request, data) => {
-  if (!event || !request || !data) {
+  if (amplitude.disabled || !event || !request || !data) {
     return;
   }
 
