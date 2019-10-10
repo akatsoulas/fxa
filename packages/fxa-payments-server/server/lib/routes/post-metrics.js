@@ -31,6 +31,20 @@ module.exports = {
   validate: {
     body: BODY_SCHEMA,
   },
+  preProcess: function(req, res, next) {
+    // convert text/plain types to JSON for validation.
+    if (/^text\/plain/.test(req.get('content-type'))) {
+      try {
+        req.body = JSON.parse(req.body);
+      } catch (error) {
+        logger.error(error);
+        // uh oh, invalid JSON. Validation will return a 400.
+        req.body = {};
+      }
+    }
+
+    next();
+  },
   handler(request, response) {
     const { data, events } = request.body;
     events.forEach(event => amplitude(event, request, data));
