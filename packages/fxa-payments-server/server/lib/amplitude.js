@@ -13,7 +13,7 @@ const {
   mapFormFactor,
   mapLocation,
   toSnakeCase,
-} = require('../../../fxa-shared/metrics/amplitude');
+} = require('../../../fxa-shared/metrics/amplitude.js');
 const config = require('../config');
 const amplitude = config.get('amplitude');
 const joi = require('joi');
