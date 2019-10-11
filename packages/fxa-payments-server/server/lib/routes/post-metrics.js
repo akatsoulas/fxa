@@ -9,9 +9,15 @@ const amplitude = require('../amplitude');
 
 // TODO: add more validators, and extract validators duplicated here and in
 //       fxa-content-server into fxa-shared
-const clientMetricsConfig = config.get('client_metrics');
+const config = require('../../config');
+const clientMetricsConfig = config.get('clientMetrics');
 const MAX_EVENT_OFFSET = clientMetricsConfig.maxEventOffset;
 const EVENT_TYPE_PATTERN = /^[\w\s.:-]+$/; // the space is to allow for error contexts that contain spaces, e.g., `error.unknown context.auth.108`
+const OFFSET_TYPE = joi
+  .number()
+  .integer()
+  .min(0);
+const STRING_TYPE = joi.string().max(1024);
 const BODY_SCHEMA = {
   data: joi.object().required(),
   events: joi
@@ -23,6 +29,10 @@ const BODY_SCHEMA = {
       })
     )
     .required(),
+  flowBeginTime: OFFSET_TYPE.optional(),
+  flowId: STRING_TYPE.hex()
+    .length(64)
+    .optional(),
 };
 
 module.exports = {
