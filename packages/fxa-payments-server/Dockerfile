@@ -16,7 +16,7 @@ WORKDIR /app
 ENV PUBLIC_URL /
 ENV INLINE_RUNTIME_CHUNK false
 RUN npm run build
-FROM node:12-stretch-slim
+FROM node:12-stretch
 RUN groupadd --gid 10001 app  && \
     useradd --uid 10001 --gid 10001 --home /app --create-home app
 USER app
