@@ -1,4 +1,4 @@
-const amplitude = require('./amplitude');
+const amplitude = require('./amplitude.js');
 const assert = require('chai').assert;
 const sinon = require('sinon');
 
