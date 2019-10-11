@@ -39,6 +39,8 @@ COPY --chown=app:app ["fxa-shared/package.json", "../fxa-shared/package.json"]
 COPY --chown=app:app ["fxa-shared/package-lock.json", "../fxa-shared/package-lock.json"]
 # Copy over one test, so npm run test won't barf
 COPY --chown=app:app ["fxa-shared/test/metrics/amplitude.js", "../fxa-shared/test/metrics/amplitude.js"]
+# Also need to copy over the tsconfig.json, or the linter will fail
+COPY --chown=app:app ["fxa-shared/tsconfig.json", "../fxa-shared/tsconfig.json"]
 RUN mkdir /fxa-shared/node_modules
 WORKDIR /fxa-shared
 USER root
