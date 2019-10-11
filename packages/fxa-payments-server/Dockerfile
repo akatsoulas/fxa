@@ -12,6 +12,15 @@ COPY ["fxa-payments-server/src", "src/"]
 COPY ["fxa-content-server", "../fxa-content-server/"]
 WORKDIR /fxa-content-server
 RUN npm ci
+
+# Borrowing this stanza from fxa-content-server/Dockerfile-build
+COPY --chown=app:app ["fxa-shared", "../fxa-shared/"]
+WORKDIR /fxa-shared
+USER root
+RUN chown -R app:app /fxa-shared
+USER app
+RUN npm ci
+
 WORKDIR /app
 ENV PUBLIC_URL /
 ENV INLINE_RUNTIME_CHUNK false
