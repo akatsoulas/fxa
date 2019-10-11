@@ -19,7 +19,6 @@ const {
   initialize,
   mapBrowser,
   mapOs,
-  mapUserAgentProperties,
   mapFormFactor,
   mapLocation,
 } = require('../../../fxa-shared/metrics/amplitude');
