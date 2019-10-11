@@ -9,7 +9,7 @@ RUN npm ci
 COPY ["fxa-payments-server/.storybook", ".storybook/"]
 COPY ["fxa-payments-server/public", "public/"]
 COPY ["fxa-payments-server/src", "src/"]
-COPY ["fxa-shared", "../fxa-shared"]
+COPY ["fxa-shared", "../fxa-shared/"]
 WORKDIR /fxa-shared
 RUN npm ci
 
@@ -35,6 +35,7 @@ COPY --chown=app:app ["fxa-shared/metrics/user-agent.js", "../fxa-shared/metrics
 COPY --chown=app:app ["fxa-shared/metrics/amplitude.js", "../fxa-shared/metrics/amplitude.js"]
 COPY --chown=app:app ["fxa-shared/package.json", "../fxa-shared/package.json"]
 COPY --chown=app:app ["fxa-shared/package-lock.json", "../fxa-shared/package-lock.json"]
+RUN mkdir /fxa-shared/node_modules
 WORKDIR /fxa-shared
 USER root
 RUN chown -R app:app /fxa-shared
