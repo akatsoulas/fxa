@@ -11,8 +11,10 @@ COPY ["fxa-payments-server/public", "public/"]
 COPY ["fxa-payments-server/src", "src/"]
 COPY ["fxa-shared", "../fxa-shared/"]
 WORKDIR /fxa-shared
+USER root
 RUN npm ci
 
+USER app
 COPY ["fxa-content-server", "../fxa-content-server/"]
 WORKDIR /fxa-content-server
 RUN npm ci
