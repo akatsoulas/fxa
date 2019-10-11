@@ -1,10 +1,6 @@
 const amplitude = require('./amplitude.js');
 const assert = require('chai').assert;
-const sinon = require('sinon');
 
-const log = {
-  info: sinon.spy(),
-};
 const amplitudeConfig = {
   disabled: false,
 };
