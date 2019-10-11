@@ -37,6 +37,8 @@ COPY --chown=app:app ["fxa-shared/metrics/user-agent.js", "../fxa-shared/metrics
 COPY --chown=app:app ["fxa-shared/metrics/amplitude.js", "../fxa-shared/metrics/amplitude.js"]
 COPY --chown=app:app ["fxa-shared/package.json", "../fxa-shared/package.json"]
 COPY --chown=app:app ["fxa-shared/package-lock.json", "../fxa-shared/package-lock.json"]
+# Copy over one test, so npm run test won't barf
+COPY --chown=app:app ["fxa-shared/test/metrics/amplitude.js", "../fxa-shared/test/metrics/amplitude.js"]
 RUN mkdir /fxa-shared/node_modules
 WORKDIR /fxa-shared
 USER root
