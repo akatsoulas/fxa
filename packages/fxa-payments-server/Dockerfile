@@ -9,6 +9,10 @@ RUN npm ci
 COPY ["fxa-payments-server/.storybook", ".storybook/"]
 COPY ["fxa-payments-server/public", "public/"]
 COPY ["fxa-payments-server/src", "src/"]
+COPY ["fxa-shared", "../fxa-shared"]
+WORKDIR /fxa-shared
+RUN npm ci
+
 COPY ["fxa-content-server", "../fxa-content-server/"]
 WORKDIR /fxa-content-server
 RUN npm ci
@@ -25,7 +29,12 @@ COPY --chown=app:app --from=node-builder /app .
 COPY --chown=app:app [ "fxa-payments-server/", "./" ]
 
 # Borrowing this stanza from fxa-content-server/Dockerfile-build
-COPY --chown=app:app ["fxa-shared", "../fxa-shared/"]
+# Except, to avoid installing redis, we're just copying over the two files
+# that are explicitly needed.
+COPY --chown=app:app ["fxa-shared/metrics/user-agent.js", "../fxa-shared/metrics/user-agent.js"]
+COPY --chown=app:app ["fxa-shared/metrics/amplitude.js", "../fxa-shared/metrics/amplitude.js"]
+COPY --chown=app:app ["fxa-shared/package.json", "../fxa-shared/package.json"]
+COPY --chown=app:app ["fxa-shared/package-lock.json", "../fxa-shared/package-lock.json"]
 WORKDIR /fxa-shared
 USER root
 RUN chown -R app:app /fxa-shared
