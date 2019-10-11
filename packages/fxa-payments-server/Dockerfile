@@ -12,6 +12,17 @@ COPY ["fxa-payments-server/src", "src/"]
 COPY ["fxa-content-server", "../fxa-content-server/"]
 WORKDIR /fxa-content-server
 RUN npm ci
+WORKDIR /app
+ENV PUBLIC_URL /
+ENV INLINE_RUNTIME_CHUNK false
+RUN npm run build
+FROM node:12-stretch-slim
+RUN groupadd --gid 10001 app  && \
+    useradd --uid 10001 --gid 10001 --home /app --create-home app
+USER app
+WORKDIR /app
+COPY --chown=app:app --from=node-builder /app .
+COPY --chown=app:app [ "fxa-payments-server/", "./" ]
 
 # Borrowing this stanza from fxa-content-server/Dockerfile-build
 COPY --chown=app:app ["fxa-shared", "../fxa-shared/"]
@@ -21,16 +32,4 @@ RUN chown -R app:app /fxa-shared
 USER app
 RUN npm ci
 
-WORKDIR /app
-ENV PUBLIC_URL /
-ENV INLINE_RUNTIME_CHUNK false
-RUN npm run build
-
-FROM node:12-stretch-slim
-RUN groupadd --gid 10001 app  && \
-    useradd --uid 10001 --gid 10001 --home /app --create-home app
-USER app
-WORKDIR /app
-COPY --chown=app:app --from=node-builder /app .
-COPY --chown=app:app [ "fxa-payments-server/", "./" ]
 CMD [ "/usr/local/bin/node", "server/bin/fxa-payments-server.js" ]
