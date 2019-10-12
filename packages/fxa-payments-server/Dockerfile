@@ -41,6 +41,8 @@ COPY --chown=app:app ["fxa-shared/package-lock.json", "../fxa-shared/package-loc
 COPY --chown=app:app ["fxa-shared/test/metrics/amplitude.js", "../fxa-shared/test/metrics/amplitude.js"]
 # Also need to copy over the tsconfig.json, or the linter will fail
 COPY --chown=app:app ["fxa-shared/tsconfig.json", "../fxa-shared/tsconfig.json"]
+# And the linter also needs the nsprc...
+COPY --chown=app:app ["fxa-shared/.nsprc", "../fxa-shared/.nsprc"]
 RUN mkdir /fxa-shared/node_modules
 WORKDIR /fxa-shared
 USER root
